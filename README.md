@@ -1,4 +1,4 @@
-# Example Courseware
+# Example Course
 
 ## Release Notes
 This course has been tested on AWS, MSA and GCP.<br/>
@@ -32,11 +32,11 @@ This course has been tested on AWS, MSA and GCP.<br/>
 This course no longer uses the `BDC` tool for assembling the notebooks into a course. `BDC` has been supplanted by the `Course Assembly Tool` (`CAT`) found within the python project https://github.com/databricks-academy/dbacademy
 
 This course makes use of the following recourses for building and publishing:
-* Student facing resources are published to the sibling repo at https://github.com/databricks-academy/natural-language-processing
-* DBCs, when desired can be found at https://github.com/databricks-academy/natural-language-processing/releases/latest
+* Student facing resources are published to the sibling repo at https://github.com/databricks-academy/{course-name}
+* DBCs, when desired can be found at https://github.com/databricks-academy/{course-name}/releases/latest
 * Both repos can found in the three Curriculum workspaces (AWS, MSA & GCP).
-    * See `/Repos/Published/natural-language-processing-source` for the source repo
-    * See `/Repos/Published/natural-language-processing-STUDENT-COPY` for the student-facing, public repo.
+    * See `/Repos/Published/{course-name}-source` for the source repo
+    * See `/Repos/Published/{course-name}-STUDENT-COPY` for the student-facing, public repo.
     * It is strongly recomended that all development occur in the AWS Curriculum workspace folder to minimize merge conflects and other development delays associated with PRs as opposed to private instances or forks.
     * Note: Curriculum Contributors (e.g. instructors, RSAs, etc) will be able to make edits, but will be unable to push changes to the git repo allowing the curriculum team to first review any changes.
 * All testing and publishing scripts can be found in the `Build-Scripts` subfolder:
@@ -72,7 +72,7 @@ The recomended practice to publish this course includes:
     * At this point the couse is considered "publsihed" in that the students will have avilable this latest version should that import the project via Databricks Repos or issue a pull request on an existing copy of the repo.
 
 ### Step #4 - Publish the DBC to the Releases page
-1. Create the DBC file by exporting the from the student-facing repo the folder `/Repos/Published/natural-language-processing-STUDENT-COPY/Scalable-NLP-with-Apache-Spark` and downloading it to your machine.
+1. Create the DBC file by exporting the from the student-facing repo the folder `/Repos/Published/{course-name}-STUDENT-COPY/{distribution-name}` and downloading it to your machine.
 2. In GitHub, open the student-facing public repo.
 3. Go the `Releases` (the link can be found on the right-side of the screen just below `About`).
 4. Note the existing conventions as you create your release:
