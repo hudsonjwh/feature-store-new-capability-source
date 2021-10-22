@@ -11,7 +11,7 @@ This course has been tested on AWS, MSA and GCP.<br/>
 |   GCP | 9.1 LTS Photon |  Single Node | n1-standard-4   | 4 cores   |
 
 ## Student Resources
-* Student-Facing Repo: https://github.com/databricks-academy/sample-courseware-repo
+* Student-Facing Repo: https://github.com/databricks-academy/example-courseware-source
 * Student DBC: See the [Latest releases](https://github.com/databricks-academy/natural-language-processing/releases/latest) section of the student-facing repo
 * Student Slides (PDF): See the [Latest releases](https://github.com/databricks-academy/natural-language-processing/releases/latest) section of the student-facing repo
 
