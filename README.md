@@ -22,9 +22,7 @@ This course has been tested on AWS, MSA and GCP.<br/>
 * T3 Videos - none
 
 ## Additional Resources
-* [Student Repository](https://github.com/databricks-academy/example-course)
-* [Source Repository](https://github.com/databricks-academy/example-course-source) (private)
-* [Report an issues or review issues for this course](https://github.com/databricks-academy/example-course-source/issues) (GitHub Issues)
+* [Report an issue or review issues for this course](https://github.com/databricks-academy/example-course-source/issues) (GitHub Issues)
 * Test Results - Coming Soon!
 
 ## Building this Course
