@@ -44,10 +44,10 @@ def execute_tests():
   round_2.add(f"{home}/Source/EC 03 - Your Third Lesson")
   round_2.add(f"{home}/Source/EC 04 - You Fourth Lesson")
 
-  round_2.add(f"{home}/Source/Solutions/Labs/EC 01L - Your First Lab")
-  round_2.add(f"{home}/Source/Solutions/Labs/EC 02L - Your Second Lab")
-  round_2.add(f"{home}/Source/Solutions/Labs/EC 03L - Your Third Lab")
-  round_2.add(f"{home}/Source/Solutions/Labs/EC 04L - You Fourth Lab")
+  round_2.add(f"{home}/Source/Labs/EC 01L - Your First Lab")
+  round_2.add(f"{home}/Source/Labs/EC 02L - Your Second Lab")
+  round_2.add(f"{home}/Source/Labs/EC 03L - Your Third Lab")
+  round_2.add(f"{home}/Source/Labs/EC 04L - You Fourth Lab")
   
   all_jobs = {**round_1.jobs, **round_2.jobs}
   client.jobs().delete_by_name(all_jobs, success_only=False)
