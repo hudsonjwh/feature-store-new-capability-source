@@ -1,4 +1,4 @@
-# Sample Courseware Repo
+# Example Courseware
 
 ## Release Notes
 This course has been tested on AWS, MSA and GCP.<br/>
