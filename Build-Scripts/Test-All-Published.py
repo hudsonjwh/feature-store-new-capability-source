@@ -30,7 +30,7 @@ from dbacademy import dbtest
 
 # When True, successfull jobs will not be deleted and the results
 # will include links to those successful jobs. Normally set to False
-keep_success = True
+keep_success = False
 
 def execute_tests():
   ignored_on_gcp = (dbgems.get_cloud() == "GCP")
