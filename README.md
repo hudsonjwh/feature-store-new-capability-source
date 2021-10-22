@@ -4,11 +4,11 @@
 This course has been tested on AWS, MSA and GCP.<br/>
 
 ## Requirements
-| Cloud |        DBR | Cluster Mode | Worker Type     | Min Cores |
-|:-----:|:----------:|:------------:|:----------------|:---------:|
-|   AWS | 9.1 LTS ML |  Single Node | i3.xlarge       | 4 cores   |
-|   MSA | 9.1 LTS ML |  Single Node | Standard_DS3_v2 | 4 cores   |
-|   GCP | 9.1 LTS ML |  Single Node | n1-standard-4   | 4 cores   |
+| Cloud |            DBR | Cluster Mode | Worker Type     | Min Cores |
+|:-----:|:--------------:|:------------:|:----------------|:---------:|
+|   AWS | 9.1 LTS Photon |  Single Node | i3.xlarge       | 4 cores   |
+|   MSA | 9.1 LTS Photon |  Single Node | Standard_DS3_v2 | 4 cores   |
+|   GCP | 9.1 LTS Photon |  Single Node | n1-standard-4   | 4 cores   |
 
 ## Student Resources
 * Student-Facing Repo: https://github.com/databricks-academy/sample-courseware-repo
@@ -16,7 +16,7 @@ This course has been tested on AWS, MSA and GCP.<br/>
 * Student Slides (PDF): See the [Latest releases](https://github.com/databricks-academy/natural-language-processing/releases/latest) section of the student-facing repo
 
 ## Instructor Resources
-* [Google Slides - Instructor](https://docs.google.com/presentation/d/1IE_nUvYm9cqlBznrNo_OJTX2eds8Xw4pTBU5IP2PUMg/edit?usp=sharing)
+* [Google Slides - Instructor](https://docs.google.com/presentation/d/1-dmmEwP8e44GY9z3aFbx81gjnBaW1jfdsW44WrToNxI/edit#slide=id.gb042b0690b_0_1622)
 
 ## Preparatory Resources
 * T3 Videos - none
@@ -24,10 +24,8 @@ This course has been tested on AWS, MSA and GCP.<br/>
 ## Additional Resources
 * [Student Repository](https://github.com/databricks-academy/natural-language-processing)
 * [Source Repository](https://github.com/databricks-academy/natural-language-processing-source) (private)
-* [Report an issues with this course](https://docs.google.com/forms/d/e/1FAIpQLScQAskPEY4Rq-Y0csOfZCGdDo_JjEphWSxfgLTZIof0cj5CaQ/viewform?usp=pp_url&entry.407881500=Natural+Language+Processing&entry.471704161=Instructor-Led)
-* Review issue status - Coming Soon!
+* [Report an issues or review issues for this course](https://github.com/databricks-academy/example-courseware-source/issues) (GitHub Issues)
 * Test Results - Coming Soon!
-* [Create a publishing request for this course](https://docs.google.com/forms/d/e/1FAIpQLScD3Tn3t4u9i-10SYPCt1Qd1P4o2RiX6O_S3xn4HgQ2HvSNdQ/viewform?usp=pp_url&entry.407881500=Natural+Language+Processing&entry.471704161=Instructor-Led)
 
 ## Building this Course
 
