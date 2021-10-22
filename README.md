@@ -11,20 +11,20 @@ This course has been tested on AWS, MSA and GCP.<br/>
 |   GCP | 9.1 LTS Photon |  Single Node | n1-standard-4   | 4 cores   |
 
 ## Student Resources
-* Student-Facing Repo: https://github.com/databricks-academy/example-courseware-source
-* Student DBC: See the [Latest releases](https://github.com/databricks-academy/natural-language-processing/releases/latest) section of the student-facing repo
-* Student Slides (PDF): See the [Latest releases](https://github.com/databricks-academy/natural-language-processing/releases/latest) section of the student-facing repo
+* Student-Facing Repo: https://github.com/databricks-academy/example-course
+* Student DBC: See the [Latest releases](https://github.com/databricks-academy/example-course/releases/latest) section of the student-facing repo
+* Student Slides (PDF): See the [Latest releases](https://github.com/databricks-academy/example-course/releases/latest) section of the student-facing repo
 
 ## Instructor Resources
-* [Google Slides - Instructor](https://docs.google.com/presentation/d/1-dmmEwP8e44GY9z3aFbx81gjnBaW1jfdsW44WrToNxI/edit#slide=id.gb042b0690b_0_1622)
+* [Google Slides - Instructor](https://drive.google.com/drive/folders/1HjyhCHRkb5R2w3deFXFKf5i9g6E3VXs7)
 
 ## Preparatory Resources
 * T3 Videos - none
 
 ## Additional Resources
-* [Student Repository](https://github.com/databricks-academy/natural-language-processing)
-* [Source Repository](https://github.com/databricks-academy/natural-language-processing-source) (private)
-* [Report an issues or review issues for this course](https://github.com/databricks-academy/example-courseware-source/issues) (GitHub Issues)
+* [Student Repository](https://github.com/databricks-academy/example-course)
+* [Source Repository](https://github.com/databricks-academy/example-course-source) (private)
+* [Report an issues or review issues for this course](https://github.com/databricks-academy/example-course-source/issues) (GitHub Issues)
 * Test Results - Coming Soon!
 
 ## Building this Course
