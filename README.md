@@ -30,9 +30,11 @@ This course has been tested on AWS, MSA and GCP.<br/>
 This course no longer uses the `BDC` tool for assembling the notebooks into a course. `BDC` has been supplanted by the `Course Assembly Tool` (`CAT`) found within the python project https://github.com/databricks-academy/dbacademy
 
 This course makes use of the following recourses for building and publishing:
-* Student facing resources are published to the sibling repo at https://github.com/databricks-academy/{course-name}
-* DBCs, when desired can be found at https://github.com/databricks-academy/{course-name}/releases/latest
-* Both repos can found in the three Curriculum workspaces (AWS, MSA & GCP).
+* Student facing resources are published to the sibling repo at<br/>
+https://github.com/databricks-academy/{course-name}
+* DBCs, when desired can be found at<br/>
+https://github.com/databricks-academy/{course-name}/releases/latest
+* Both repos can found in the three Curriculum workspaces ([AWS](https://curriculum.cloud.databricks.com/?o=5775574114781423), [MSA](https://westus2.azuredatabricks.net/?o=2472203627577334) & [GCP](https://8422030046858219.9.gcp.databricks.com/?o=8422030046858219)).
     * See `/Repos/Published/{course-name}-source` for the source repo
     * See `/Repos/Published/{course-name}-STUDENT-COPY` for the student-facing, public repo.
     * It is strongly recomended that all development occur in the AWS Curriculum workspace folder to minimize merge conflects and other development delays associated with PRs as opposed to private instances or forks.
@@ -70,7 +72,8 @@ The recomended practice to publish this course includes:
     * At this point the couse is considered "publsihed" in that the students will have avilable this latest version should that import the project via Databricks Repos or issue a pull request on an existing copy of the repo.
 
 ### Step #4 - Publish the DBC to the Releases page
-1. Create the DBC file by exporting the from the student-facing repo the folder `/Repos/Published/{course-name}-STUDENT-COPY/{distribution-name}` and downloading it to your machine.
+1. Create the DBC file by exporting it from the student-facing repo folder<br/>
+`/Repos/Published/{course-name}-STUDENT-COPY/{distribution-name}` and downloading it to your machine.
 2. In GitHub, open the student-facing public repo.
 3. Go the `Releases` (the link can be found on the right-side of the screen just below `About`).
 4. Note the existing conventions as you create your release:
@@ -80,14 +83,14 @@ The recomended practice to publish this course includes:
 5. Click on `Draft a new release`
 6. Provide the required tag, title and description.
 7. Upload the DBC file created in step #6 above.
-8. Upload the last version of the slides, if any
-    * Note: If the slides are known to be unmodified, you can download them from the previus version.
+8. Upload the last version of the slides, if any.<br/>
+Note: If the slides are known to be unmodified, you can download them from the previous version.
 9. Optionally select `This is a pre-release` if this a beta release.
 10. Click `Publish release`
 
 ### Step #5 - Update the Release Notes (README.md)
 1. Go back to the source repo and open the `README.md` file.
-2. Update the `Release Notes` section which will include know testing failures, problems specific to a notebook and/or cloud, and any other general information.
+2. Update the `Release Notes` section which will include know testing failures, problems specific to a notebook and/or cloud, and any other general information that an instructor may find useful.
 3. Update the `Requirements` section to reflect the DBR under which this course was tested, the worker type used in testing, and the minium number of cores.
 4. Update the `Classroom Resources` section if anything has changed.
   * Note: Student DBC and Student Slides should remain unchanged as they simply point the the latest relase.
