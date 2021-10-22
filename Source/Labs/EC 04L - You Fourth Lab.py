@@ -15,4 +15,8 @@
 
 # COMMAND ----------
 
+assert False, "Ya, this just isn't going to work for us tody"
+
+# COMMAND ----------
+
 print("Congratulations, you completed your fourth lab!")
