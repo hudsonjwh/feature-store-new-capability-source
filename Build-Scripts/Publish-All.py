@@ -30,7 +30,7 @@ username = "Published" if published else dbgems.get_username()
 source_repo = dbgems.get_notebook_dir(-2)
 source_dir = f"{source_repo}/Source"
 
-target_repo_name = "example-courseware-STUDENT-COPY"
+target_repo_name = "example-course-STUDENT-COPY"
 target_dir = f"{dbgems.get_notebook_dir(-3)}/{target_repo_name}/{dist_name}"
 
 print(f"Source Dir: {source_dir}")

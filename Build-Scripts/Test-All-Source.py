@@ -1,5 +1,5 @@
 # Databricks notebook source
-# MAGIC %md # Deep Learning
+# MAGIC %md # Example Course
 # MAGIC 
 # MAGIC This test suite can be ran by simply hitting **Run All** however, it will only test the the single version specified in [Test-Config]($./Test-Config)
 # MAGIC 
