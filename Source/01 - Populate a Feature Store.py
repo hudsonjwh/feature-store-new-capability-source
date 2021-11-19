@@ -10,16 +10,24 @@
 # MAGIC %md
 # MAGIC # Create Feaures in Feature Store
 # MAGIC 
-# MAGIC In this notebook, we're going to populate a feaure store.
+# MAGIC In this notebook, we're going to populate a feaure store using the Python Client API.
+# MAGIC 
+# MAGIC We're going to be doing this with a dataset from NYC Taxi Service. Let's start by reading in the raw dataset from the default Databricks dataset.
 
 # COMMAND ----------
 
-#%run ./Includes/Classroom-Setup
+raw_data = spark.read.format("delta").load("/databricks-datasets/nyctaxi-with-zipcodes/subsampled")
+display(raw_data)
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Next, we want to create some helper functions to transform our data. 
 
 # COMMAND ----------
 
 from databricks import feature_store
-from pyspark.sql.functions import *
+import pyspark.sql.functions as F 
 from pyspark.sql.types import FloatType, IntegerType, StringType
 from pytz import timezone
  
@@ -37,10 +45,15 @@ def partition_id(dt):
  
 def filter_df_by_ts(df, ts_column, start_date, end_date):
     if ts_column and start_date:
-        df = df.filter(col(ts_column) >= start_date)
+        df = df.filter(F.col(ts_column) >= start_date)
     if ts_column and end_date:
-        df = df.filter(col(ts_column) < end_date)
+        df = df.filter(F.col(ts_column) < end_date)
     return df
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Now let's create some wrapper functions for both the pickup and dropoff features.
 
 # COMMAND ----------
 
@@ -54,18 +67,18 @@ def pickup_features_fn(df, ts_column, start_date, end_date):
     )
     pickupzip_features = (
         df.groupBy(
-            "pickup_zip", window("tpep_pickup_datetime", "1 hour", "15 minutes")
+            "pickup_zip", F.window("tpep_pickup_datetime", "1 hour", "15 minutes")
         )  # 1 hour window, sliding every 15 minutes
         .agg(
-            mean("fare_amount").alias("mean_fare_window_1h_pickup_zip"),
-            count("*").alias("count_trips_window_1h_pickup_zip"),
+            F.mean("fare_amount").alias("mean_fare_window_1h_pickup_zip"),
+            F.count("*").alias("count_trips_window_1h_pickup_zip"),
         )
         .select(
-            col("pickup_zip").alias("zip"),
-            unix_timestamp(col("window.end")).alias("ts").cast(IntegerType()),
-            partition_id(to_timestamp(col("window.end"))).alias("yyyy_mm"),
-            col("mean_fare_window_1h_pickup_zip").cast(FloatType()),
-            col("count_trips_window_1h_pickup_zip").cast(IntegerType()),
+            F.col("pickup_zip").alias("zip"),
+            F.unix_timestamp(F.col("window.end")).alias("ts").cast(IntegerType()),
+            partition_id(F.to_timestamp(F.col("window.end"))).alias("yyyy_mm"),
+            F.col("mean_fare_window_1h_pickup_zip").cast(FloatType()),
+            F.col("count_trips_window_1h_pickup_zip").cast(IntegerType()),
         )
     )
     return pickupzip_features
@@ -79,17 +92,22 @@ def dropoff_features_fn(df, ts_column, start_date, end_date):
         df,  ts_column, start_date, end_date
     )
     dropoffzip_features = (
-        df.groupBy("dropoff_zip", window("tpep_dropoff_datetime", "30 minute"))
-        .agg(count("*").alias("count_trips_window_30m_dropoff_zip"))
+        df.groupBy("dropoff_zip", F.window("tpep_dropoff_datetime", "30 minute"))
+        .agg(F.count("*").alias("count_trips_window_30m_dropoff_zip"))
         .select(
-            col("dropoff_zip").alias("zip"),
-            unix_timestamp(col("window.end")).alias("ts").cast(IntegerType()),
-            partition_id(to_timestamp(col("window.end"))).alias("yyyy_mm"),
-            col("count_trips_window_30m_dropoff_zip").cast(IntegerType()),
-            is_weekend(col("window.end")).alias("dropoff_is_weekend"),
+            F.col("dropoff_zip").alias("zip"),
+            F.unix_timestamp(F.col("window.end")).alias("ts").cast(IntegerType()),
+            partition_id(F.to_timestamp(F.col("window.end"))).alias("yyyy_mm"),
+            F.col("count_trips_window_30m_dropoff_zip").cast(IntegerType()),
+            is_weekend(F.col("window.end")).alias("dropoff_is_weekend"),
         )
     )
     return dropoffzip_features  
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Creating a pick up dataframe and a drop off feature dataframe.
 
 # COMMAND ----------
 
@@ -106,6 +124,11 @@ dropoff_features = dropoff_features_fn(
 
 # MAGIC %sql 
 # MAGIC CREATE DATABASE IF NOT EXISTS feature_store_taxi_example;
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Now let's import the Feature Store Client and write to a table!
 
 # COMMAND ----------
 
@@ -172,8 +195,4 @@ fs.write_table(
 
 # COMMAND ----------
 
-fs.write_table(
-  name="streaming_example.streaming_features",
-  df=streaming_df,
-  mode="merge",
-)
+
