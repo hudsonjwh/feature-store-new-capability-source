@@ -1,4 +1,4 @@
-# Example Course
+# New Capability: Feature Store
 
 ## Release Notes
 This course has been tested on AWS, MSA and GCP.<br/>
