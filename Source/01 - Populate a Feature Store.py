@@ -12,7 +12,7 @@
 # MAGIC 
 # MAGIC In this notebook, we're going to populate a feaure store using the Python Client API.
 # MAGIC 
-# MAGIC We're going to be doing this with a dataset from NYC Taxi Service. Let's start by reading in the raw dataset from the default Databricks dataset.
+# MAGIC We're going to be doing this with a dataset from the NYC Taxi Service. Let's start by reading in the raw dataset from the default Databricks dataset.
 
 # COMMAND ----------
 
@@ -23,7 +23,7 @@ from pytz import timezone
  
 # Grabbing username and doing a little clean up of the string
 username = spark.sql("SELECT current_user()").collect()[0][0]
-if 'a' in  username:
+if '@' in  username:
   username = username.split('@')[0]
 if '.' in username:
   username = username.replace(".", "")

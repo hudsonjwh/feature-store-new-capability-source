@@ -21,7 +21,7 @@ from databricks import feature_store
 
 # Grabbing username and doing a little clean up of the string
 username = spark.sql("SELECT current_user()").collect()[0][0]
-if 'a' in  username:
+if '@' in  username:
   username = username.split('@')[0]
 if '.' in username:
   username = username.replace('.', '')
