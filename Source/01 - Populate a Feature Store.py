@@ -16,6 +16,20 @@
 
 # COMMAND ----------
 
+from databricks import feature_store
+import pyspark.sql.functions as F 
+from pyspark.sql.types import FloatType, IntegerType, StringType
+from pytz import timezone
+ 
+# Grabbing username and doing a little clean up of the string
+username = spark.sql("SELECT current_user()").collect()[0][0]
+if 'a' in  username:
+  username = username.split('@')[0]
+if '.' in username:
+  username = username.replace(".", "")
+
+# COMMAND ----------
+
 raw_data = spark.read.format("delta").load("/databricks-datasets/nyctaxi-with-zipcodes/subsampled")
 display(raw_data)
 
@@ -26,12 +40,6 @@ display(raw_data)
 
 # COMMAND ----------
 
-from databricks import feature_store
-import pyspark.sql.functions as F 
-from pyspark.sql.types import FloatType, IntegerType, StringType
-from pytz import timezone
- 
- 
 @udf(returnType=IntegerType())
 def is_weekend(dt):
     tz = "America/New_York"
@@ -122,6 +130,11 @@ dropoff_features = dropoff_features_fn(
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC Make sure that we've got our Hive Metastore set up.
+
+# COMMAND ----------
+
 # MAGIC %sql 
 # MAGIC CREATE DATABASE IF NOT EXISTS feature_store_taxi_example;
 
@@ -139,14 +152,14 @@ fs = feature_store.FeatureStoreClient()
 spark.conf.set("spark.sql.shuffle.partitions", "5")
  
 fs.create_feature_table(
-    name="feature_store_taxi_example.trip_pickup_features",
+    name=f"feature_store_taxi_example.{username}_trip_pickup_features",
     keys=["zip", "ts"],
     features_df=pickup_features,
     partition_columns="yyyy_mm",
     description="Taxi Fares. Pickup Features",
 )
 fs.create_feature_table(
-    name="feature_store_taxi_example.trip_dropoff_features",
+    name=f"feature_store_taxi_example.{username}_trip_dropoff_features",
     keys=["zip", "ts"],
     features_df=dropoff_features,
     partition_columns="yyyy_mm",
@@ -165,7 +178,7 @@ pickup_features_df = pickup_features_fn(
  
 # Write the pickup features DataFrame to the feature store table
 fs.write_table(
-  name="feature_store_taxi_example.trip_pickup_features",
+  name=f"feature_store_taxi_example.{username}_trip_pickup_features",
   df=pickup_features_df,
   mode="merge",
 )
@@ -180,17 +193,9 @@ dropoff_features_df = dropoff_features_fn(
  
 # Write the dropoff features DataFrame to the feature store table
 fs.write_table(
-  name="feature_store_taxi_example.trip_dropoff_features",
+  name=f"feature_store_taxi_example.{username}_trip_dropoff_features",
   df=dropoff_features_df,
   mode="merge",
-)
-
-# COMMAND ----------
-
-fs.write_table(
-  name="feature_store_taxi_example.trip_pickup_features",
-  df=pickup_features_df,
-  mode="overwrite",
 )
 
 # COMMAND ----------

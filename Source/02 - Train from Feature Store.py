@@ -16,8 +16,16 @@
 
 # COMMAND ----------
 
-from databricks import feature_store
 import pyspark.sql.functions as F
+from databricks import feature_store
+
+# Grabbing username and doing a little clean up of the string
+username = spark.sql("SELECT current_user()").collect()[0][0]
+if 'a' in  username:
+  username = username.split('@')[0]
+if '.' in username:
+  username = username.replace('.', '')
+    
 
 # COMMAND ----------
 
@@ -25,17 +33,23 @@ fs = feature_store.FeatureStoreClient()
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC Let's read those tables using the API.
+
+# COMMAND ----------
+
 dropoff_df = fs.read_table(
-  name="feature_store_taxi_example.trip_dropoff_features"
+  name=f"feature_store_taxi_example.{username}_trip_dropoff_features"
 )
 pickup_df = fs.read_table(
-  name="feature_store_taxi_example.trip_pickup_features"
+  name=f"feature_store_taxi_example.{username}_trip_pickup_features"
 )
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Alternatively, we can use the FeatureLookup class
+# MAGIC 
+# MAGIC Let's do a little more feature engineering before we pass to the model. 
 
 # COMMAND ----------
 
@@ -77,6 +91,11 @@ taxi_data = rounded_taxi_data(raw_data)
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC Alternatively, we can use the FeatureLookup class
+
+# COMMAND ----------
+
 from databricks.feature_store import FeatureLookup
 import mlflow
  
@@ -100,6 +119,12 @@ dropoff_feature_lookups = [
 ]
 
 # COMMAND ----------
+
+# End any existing runs (in the case this notebook is being run for a second time)
+mlflow.end_run()
+ 
+# Start an mlflow run, which is needed for the feature store to log the model
+mlflow.start_run() 
 
 # Since the rounded timestamp columns would likely cause the model to overfit the data 
 # unless additional feature engineering was performed, exclude them to avoid training on them.
@@ -133,6 +158,13 @@ y_test = test.fare_amount
 
 # COMMAND ----------
 
+from mlflow.tracking import MlflowClient
+import mlflow.sklearn
+ 
+mlflow.sklearn.autolog()
+
+# COMMAND ----------
+
 from sklearn.neighbors import KNeighborsRegressor
 knn = KNeighborsRegressor(n_neighbors=5)
 
@@ -142,7 +174,14 @@ knn.fit(X_train, y_train)
 
 # COMMAND ----------
 
-knn.score(X_test, y_test)
+# Log the trained model with MLflow and package it with feature lookup information. 
+fs.log_model(
+  knn,
+  artifact_path="model_packaged",
+  flavor=mlflow.sklearn,
+  training_set=training_set,
+  registered_model_name="taxi_example_fare_packaged"
+)
 
 # COMMAND ----------
 
@@ -166,7 +205,33 @@ display(new_taxi_data_preds)
 
 # COMMAND ----------
 
-fs.write_table(
-  name="taxi_predictions", 
-  df=new_taxi_data_preds
-)
+# MAGIC %md
+# MAGIC Create the table
+
+# COMMAND ----------
+
+def get_latest_model_version(model_name):
+  latest_version = 1
+  mlflow_client = MlflowClient()
+  for mv in mlflow_client.search_model_versions(f"name='{model_name}'"):
+    version_int = int(mv.version)
+    if version_int > latest_version:
+      latest_version = version_int
+  return latest_version
+
+new_taxi_data = rounded_taxi_data(raw_data)
+# Get the model URI
+latest_model_version = get_latest_model_version("taxi_example_fare_packaged")
+model_uri = f"models:/taxi_example_fare_packaged/{latest_model_version}"
+
+cols = ['fare_amount', 'trip_distance', 'pickup_zip', 'dropoff_zip', 'rounded_pickup_datetime', 'rounded_dropoff_datetime']
+new_taxi_data_reordered = new_taxi_data.select(cols)
+display(new_taxi_data_reordered)
+
+ 
+# Call score_batch to get the predictions from the model
+with_predictions = fs.score_batch(model_uri, new_taxi_data)
+
+# COMMAND ----------
+
+
