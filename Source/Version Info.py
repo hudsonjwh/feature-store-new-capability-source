@@ -6,6 +6,10 @@
 
 # MAGIC %md # Project Information
 # MAGIC 
-# MAGIC * Name: **Example Course**
-# MAGIC * Version:  **{{verison_number}}**
-# MAGIC * Built On: **{{built_on}}**
+# MAGIC * Name: **New Capability Overview: Feature Store**
+# MAGIC * Version:  **1.0.0**
+# MAGIC * Built On: **2021-11-29**
+
+# COMMAND ----------
+
+
